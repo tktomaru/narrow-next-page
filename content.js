@@ -1,5 +1,5 @@
 document.addEventListener('keydown', function (event) {
-    console.log('Down arrow  key=' + event.key + "  code=" + event.code)
+    console.log('keydown  key=' + event.key + "  code=" + event.code)
     // ============= ハーメルン用 ============= 
     if (event.key === 'PageDown') {
         console.log('HAMELN Down arrow pressed')
