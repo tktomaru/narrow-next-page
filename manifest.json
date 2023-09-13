@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "小説家になろう Click the next(or prev) button on PageDown(or PageUp)",
+  "name": "ハーメルン Click the next(or prev) button on PageDown(or PageUp)",
   "version": "1.0",
   "description": "Automatically click the next page button when pressing the Down key at the bottom of the page.",
   "permissions": [
