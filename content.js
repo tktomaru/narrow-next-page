@@ -9,23 +9,23 @@ document.addEventListener('keydown', function(event) {
             var nextHref = document.querySelector('.next_page_link');
             if (nextHref) {
                 console.log('Down arrow pressed and scrolled to bottom and next page link found')
-                // ボタンをクリック
+                // hrefをクリック
                 nextHref.click();
             }
         }
     }
     if (event.key === 'PageUp') {
         console.log('Up arrow pressed')
-        // ページの最下部までスクロールされたかをチェック
+        // ページの最上部までスクロールされたかをチェック
         if ((window.scrollY) <= 0) {
             console.log('Up arrow pressed and scrolled to bottom')
-            // class属性がnext_page_linkである要素を探す
-            var nextHref = document.querySelector('.novelnb');
-            if (nextHref) {
-                nextHref = nextHref.querySelector('a');
+            // class属性がnovelnbである要素を探す
+            var nextLi = document.querySelector('.novelnb');
+            if (nextLi) {
+                var nextHref = nextLi.querySelector('a');
                 if (nextHref) {
                     console.log('Up arrow pressed and scrolled to bottom and next page link found')
-                    // ボタンをクリック
+                    // hrefをクリック
                     nextHref.click();
                 }
             }
