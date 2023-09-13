@@ -3,31 +3,35 @@
   "name": "なろう Click the next(or prev) button on PageDown(or PageUp)", // 拡張機能の名前。
   "version": "1.0", // 拡張機能のバージョン番号。
   "description": "Automatically click the next page button when pressing the Down key at the bottom of the page.", // 拡張機能の説明。
-  "permissions": [ // 拡張機能が利用する権限。ここでは"activeTab"が指定されています。
-    "activeTab"
-  ],
-  "background": { // バックグラウンドスクリプトの設定。
+  "permissions": ["activeTab"],
+  "background": {
     "service_worker": "background.js" // "background.js"という名前のサービスワーカースクリプトが指定されています。
   },
-  "action": { // 拡張機能のアクション（ボタン）の設定。
-    "default_icon": { // デフォルトのアイコンの設定。
+  "action": {
+    // 拡張機能のアクション（ボタン）の設定。
+    "default_icon": {
+      // デフォルトのアイコンの設定。
       "16": "icon16.png",
       "48": "icon48.png",
       "128": "icon128.png"
     }
   },
-  "icons": { // アイコンのパスの設定。
+  "icons": {
+    // アイコンのパスの設定。
     "16": "icon16.png",
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "content_scripts": [ // コンテンツスクリプトの設定。
+  "content_scripts": [
+    // コンテンツスクリプトの設定。
     {
-      "matches": [ // 適用するURLパターンのリスト。
+      "matches": [
+        // 適用するURLパターンのリスト。
         "https://syosetu.org/novel/*",
         "https://ncode.syosetu.com/*"
       ],
-      "js": [ // 実行するJavaScriptファイルのリスト。
+      "js": [
+        // 実行するJavaScriptファイルのリスト。
         "content.js"
       ]
     }

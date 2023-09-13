@@ -1,36 +1,52 @@
+window.addEventListener('load', function (event) {
+  console.log('Page load completed')
+  let logs = JSON.parse(sessionStorage.getItem('logs')) || [] // 保存されたログを取得
+
+  if (logs.length > 0) {
+    console.log('==== Saved Logs ====')
+    logs.forEach((log) => console.log(log)) // 保存されたログを出力
+    logs = [] // 一度出力したらログをクリア
+    sessionStorage.setItem('logs', JSON.stringify(logs)) // クリアしたログを保存
+  }
+})
+
 document.addEventListener('keydown', function (event) {
-  console.log('keydown  key=' + event.key + '  code=' + event.code)
+  let logs = JSON.parse(sessionStorage.getItem('logs')) || [] // 保存されたログを取得
+  function addLog(log) {
+    logs.push(log) // ログを配列に追加
+    console.log(log) // コンソールに出力
+    // ログの配列を保持し、他のページに遷移しても参照可能
+    sessionStorage.setItem('logs', JSON.stringify(logs))
+  }
+  addLog('keydown  key=' + event.key + '  code=' + event.code)
+
   // ============= ハーメルン用 =============
   if (event.key === 'PageDown') {
-    console.log('HAMELN Down arrow pressed')
+    addLog('HAMELN Down arrow pressed')
     // ページの最下部までスクロールされたかをチェック
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      console.log('HAMELN Down arrow pressed and scrolled to bottom')
+      addLog('HAMELN Down arrow pressed and scrolled to bottom')
       // class属性がnext_page_linkである要素を探す
       var nextHref = document.querySelector('.next_page_link')
       if (nextHref) {
-        console.log(
-          'HAMELN Down arrow pressed and scrolled to bottom and next page link found'
-        )
         // hrefをクリック
+        addLog('■HAMELN Next Page clicked')
         nextHref.click()
       }
     }
   }
   if (event.key === 'PageUp') {
-    console.log('HAMELN Up arrow pressed')
+    addLog('HAMELN Up arrow pressed')
     // ページの最上部までスクロールされたかをチェック
     if (window.scrollY <= 0) {
-      console.log('HAMELN Up arrow pressed and scrolled to top')
+      addLog('HAMELN Up arrow pressed and scrolled to top')
       // class属性がnovelnbである要素を探す
       var nextLi = document.querySelector('.novelnb')
       if (nextLi) {
         var nextHref = nextLi.querySelector('a')
         if (nextHref) {
-          console.log(
-            'HAMELN Up arrow pressed and scrolled to top and prev page link found'
-          )
           // hrefをクリック
+          addLog('■HAMELN Previous Page clicked')
           nextHref.click()
         }
       }
@@ -39,15 +55,16 @@ document.addEventListener('keydown', function (event) {
 
   // ============= なろう用 =============
   if (event.key === 'PageDown') {
-    console.log('Narrow Down arrow pressed')
+    addLog('Narrow Down arrow pressed')
     // ページの最下部までスクロールされたかをチェック
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      console.log('Narrow Down arrow pressed and scrolled to bottom')
+      addLog('Narrow Down arrow pressed and scrolled to bottom')
       // class属性がnovel_bnである要素を探す
       var nextA = document.querySelectorAll('.novel_bn a')
       for (let i = 0; i < nextA.length; i++) {
         const link = nextA[i]
         if (link.textContent.includes('次へ')) {
+          addLog('■Narrow Next Page clicked')
           link.click()
           break // 最初の次へを見つけたらループを終了します
         }
@@ -55,14 +72,16 @@ document.addEventListener('keydown', function (event) {
     }
   }
   if (event.key === 'PageUp') {
-    console.log('Narrow Up arrow pressed')
+    addLog('Narrow Up arrow pressed')
     // ページの最上部までスクロールされたかをチェック
     if (window.scrollY <= 0) {
+      addLog('Narrow Up arrow pressed and scrolled to top')
       // class属性がnovel_bnである要素を探す
       var nextA = document.querySelectorAll('.novel_bn a')
       for (let i = 0; i < nextA.length; i++) {
         const link = nextA[i]
         if (link.textContent.includes('前へ')) {
+          addLog('■Narrow Previous Page clicked')
           link.click()
           break // 最初の次へを見つけたらループを終了します
         }
