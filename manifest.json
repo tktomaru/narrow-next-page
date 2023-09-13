@@ -1,33 +1,33 @@
 {
-  "manifest_version": 3,
-  "name": "なろう Click the next(or prev) button on PageDown(or PageUp)",
-  "version": "1.0",
-  "description": "Automatically click the next page button when pressing the Down key at the bottom of the page.",
-  "permissions": [
+  "manifest_version": 3, // 拡張機能のマニフェストバージョン。ここではバージョン3が指定されています。
+  "name": "なろう Click the next(or prev) button on PageDown(or PageUp)", // 拡張機能の名前。
+  "version": "1.0", // 拡張機能のバージョン番号。
+  "description": "Automatically click the next page button when pressing the Down key at the bottom of the page.", // 拡張機能の説明。
+  "permissions": [ // 拡張機能が利用する権限。ここでは"activeTab"が指定されています。
     "activeTab"
   ],
-  "background": {
-    "service_worker": "background.js"
+  "background": { // バックグラウンドスクリプトの設定。
+    "service_worker": "background.js" // "background.js"という名前のサービスワーカースクリプトが指定されています。
   },
-  "action": {
-    "default_icon": {
+  "action": { // 拡張機能のアクション（ボタン）の設定。
+    "default_icon": { // デフォルトのアイコンの設定。
       "16": "icon16.png",
       "48": "icon48.png",
       "128": "icon128.png"
     }
   },
-  "icons": {
+  "icons": { // アイコンのパスの設定。
     "16": "icon16.png",
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "content_scripts": [
+  "content_scripts": [ // コンテンツスクリプトの設定。
     {
-      "matches": [
+      "matches": [ // 適用するURLパターンのリスト。
         "https://syosetu.org/novel/*",
         "https://ncode.syosetu.com/*"
       ],
-      "js": [
+      "js": [ // 実行するJavaScriptファイルのリスト。
         "content.js"
       ]
     }
