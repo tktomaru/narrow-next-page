@@ -18,13 +18,13 @@ document.addEventListener('keydown', function(event) {
         console.log('Up arrow pressed')
         // ページの最上部までスクロールされたかをチェック
         if ((window.scrollY) <= 0) {
-            console.log('Up arrow pressed and scrolled to bottom')
+            console.log('Up arrow pressed and scrolled to top')
             // class属性がnovelnbである要素を探す
             var nextLi = document.querySelector('.novelnb');
             if (nextLi) {
                 var nextHref = nextLi.querySelector('a');
                 if (nextHref) {
-                    console.log('Up arrow pressed and scrolled to bottom and next page link found')
+                    console.log('Up arrow pressed and scrolled to top and prev page link found')
                     // hrefをクリック
                     nextHref.click();
                 }
