@@ -3,8 +3,9 @@ window.addEventListener('load', function (event) {
   let logs = JSON.parse(sessionStorage.getItem('logs')) || [] // 保存されたログを取得
 
   if (logs.length > 0) {
-    console.log('==== Saved Logs ====')
+    console.log('==== Saved Logs Start ====')
     logs.forEach((log) => console.log(log)) // 保存されたログを出力
+    console.log('==== Saved Logs End ====')
     logs = [] // 一度出力したらログをクリア
     sessionStorage.setItem('logs', JSON.stringify(logs)) // クリアしたログを保存
   }
