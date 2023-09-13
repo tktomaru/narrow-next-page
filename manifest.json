@@ -24,7 +24,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://syosetu.org/novel/*"
+        "https://syosetu.org/novel/*",
+        "https://ncode.syosetu.com/*"
       ],
       "js": [
         "content.js"
