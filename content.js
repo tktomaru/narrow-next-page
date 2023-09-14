@@ -23,9 +23,9 @@ document.addEventListener('keydown', function (event) {
 
   function top(name, clickFunc, text, selectClass) {
     addLog(`${name}!`)
-    // ページの最下部までスクロールされたかをチェック
+    // ページの最上部までスクロールされたかをチェック
     if (window.scrollY <= 0) {
-      addLog('scrolled to bottom')
+      addLog('scrolled to top')
       clickFunc(text, selectClass)
     }
   }
