@@ -3,7 +3,7 @@ window.addEventListener('load', function (event) {
   let logs = JSON.parse(sessionStorage.getItem('logs')) || [] // 保存されたログを取得
 
   if (logs.length > 0) {
-    console.log('==== Saved Logs Start ====')
+    console.log('==== Saved Logs Start  ====')
     logs.forEach((log) => console.log(log)) // 保存されたログを出力
     console.log('==== Saved Logs End ====')
     logs = [] // 一度出力したらログをクリア
@@ -21,72 +21,68 @@ document.addEventListener('keydown', function (event) {
   }
   addLog('keydown  key=' + event.key + '  code=' + event.code)
 
-  // ============= ハーメルン用 =============
-  if (event.key === 'PageDown') {
-    addLog('HAMELN Down arrow pressed')
+  function top(name, clickFunc, text, selectClass) {
+    addLog(`${name}!`)
+    // ページの最下部までスクロールされたかをチェック
+    if (window.scrollY <= 0) {
+      addLog('scrolled to bottom')
+      clickFunc(text, selectClass)
+    }
+  }
+  function bottom(name, clickFunc, text, selectClass) {
+    addLog(`${name}!`)
     // ページの最下部までスクロールされたかをチェック
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      addLog('HAMELN Down arrow pressed and scrolled to bottom')
-      // class属性がnext_page_linkである要素を探す
-      var nextHref = document.querySelector('.next_page_link')
-      if (nextHref) {
-        // hrefをクリック
-        addLog('■HAMELN Next Page clicked')
-        nextHref.click()
+      addLog('scrolled to bottom')
+      clickFunc(text, selectClass)
+    }
+  }
+  function narrowClick(text, selectClass) {
+    addLog('hamelonClick')
+    // class属性がselectClassである要素を探す
+    var nextA = document.querySelectorAll(selectClass)
+    for (let i = 0; i < nextA.length; i++) {
+      const link = nextA[i]
+      if (link.textContent.includes(text)) {
+        addLog('■Narrow Next Page clicked')
+        link.click()
+        break // 最初の次へを見つけたらループを終了します
       }
     }
   }
-  if (event.key === 'PageUp') {
-    addLog('HAMELN Up arrow pressed')
-    // ページの最上部までスクロールされたかをチェック
-    if (window.scrollY <= 0) {
-      addLog('HAMELN Up arrow pressed and scrolled to top')
-      // class属性がnovelnbである要素を探す
-      var nextLi = document.querySelector('.novelnb')
-      if (nextLi) {
-        var nextHref = nextLi.querySelector('a')
-        if (nextHref) {
-          // hrefをクリック
-          addLog('■HAMELN Previous Page clicked')
-          nextHref.click()
-        }
-      }
+  function hamelonClick(text, selectClass) {
+    addLog('hamelonClick')
+    // class属性がselectClassである要素を探す
+    var nextHref = document.querySelector(selectClass)
+    if (nextHref) {
+      // hrefをクリック
+      addLog('■HAMELN Next Page clicked')
+      nextHref.click()
     }
   }
 
-  // ============= なろう用 =============
+  function executeFunction(func, parameter, clickFunc, text, selectClass) {
+    func(parameter, clickFunc, text, selectClass)
+  }
+
+  // ============= ハーメルン用 =============
   if (event.key === 'PageDown') {
-    addLog('Narrow Down arrow pressed')
-    // ページの最下部までスクロールされたかをチェック
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      addLog('Narrow Down arrow pressed and scrolled to bottom')
-      // class属性がnovel_bnである要素を探す
-      var nextA = document.querySelectorAll('.novel_bn a')
-      for (let i = 0; i < nextA.length; i++) {
-        const link = nextA[i]
-        if (link.textContent.includes('次へ')) {
-          addLog('■Narrow Next Page clicked')
-          link.click()
-          break // 最初の次へを見つけたらループを終了します
-        }
-      }
-    }
+    executeFunction(
+      bottom,
+      'bottom hawmelon',
+      hamelonClick,
+      '',
+      '.next_page_link'
+    )
   }
   if (event.key === 'PageUp') {
-    addLog('Narrow Up arrow pressed')
-    // ページの最上部までスクロールされたかをチェック
-    if (window.scrollY <= 0) {
-      addLog('Narrow Up arrow pressed and scrolled to top')
-      // class属性がnovel_bnである要素を探す
-      var nextA = document.querySelectorAll('.novel_bn a')
-      for (let i = 0; i < nextA.length; i++) {
-        const link = nextA[i]
-        if (link.textContent.includes('前へ')) {
-          addLog('■Narrow Previous Page clicked')
-          link.click()
-          break // 最初の次へを見つけたらループを終了します
-        }
-      }
-    }
+    executeFunction(top, 'top hawmelon', hamelonClick, '', '.novelnb a')
+  }
+  // ============= なろう用 =============
+  if (event.key === 'PageDown') {
+    executeFunction(bottom, 'bottom narrow', narrowClick, '次へ', '.novel_bn a')
+  }
+  if (event.key === 'PageUp') {
+    executeFunction(top, 'top narrow', narrowClick, '前へ', '.novel_bn a')
   }
 })
