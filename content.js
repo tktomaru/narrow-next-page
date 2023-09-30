@@ -113,6 +113,7 @@ document.addEventListener('keydown', function (event) {
   }
   // ============= 応用情報用 =============
   if (currentDomain == 'www.ap-siken.com') {
+    // 数値キーで問題回答
     if (event.key === '1') {
       executeFunction(every, '応用', clickClassIncluceText, 'ア', '.selectBtn')
     }
@@ -125,9 +126,38 @@ document.addEventListener('keydown', function (event) {
     if (event.key === '4') {
       executeFunction(every, '応用', clickClassIncluceText, 'エ', '.selectBtn')
     }
+    // 数値キーの下のボタンでページ移動
+    if (event.key === 'q') {
+      executeFunction(every, 'every 応用', clickClass, '', '.submit')
+    }
+    if (event.key === 'r') {
+      executeFunction(every, 'every 応用', clickClass, '', '.submit')
+    }
+    // キーボードの下のほうのボタンで回答
+    if (event.key === 'z') {
+      executeFunction(every, '応用', clickClassIncluceText, 'ア', '.selectBtn')
+    }
+    if (event.key === 'x') {
+      executeFunction(every, '応用', clickClassIncluceText, 'イ', '.selectBtn')
+    }
+    if (event.key === 'c') {
+      executeFunction(every, '応用', clickClassIncluceText, 'ウ', '.selectBtn')
+    }
+    if (event.key === 'v') {
+      executeFunction(every, '応用', clickClassIncluceText, 'エ', '.selectBtn')
+    }
+    // キーボードの下のほうのボタンの一つ上で次のページ
+    if (event.key === 'a') {
+      executeFunction(every, 'every 応用', clickClass, '', '.submit')
+    }
+    if (event.key === 'g') {
+      executeFunction(every, 'every 応用', clickClass, '', '.submit')
+    }
+    // PageDownボタンで次のページ
     if (event.key === 'PageDown') {
       executeFunction(every, 'every 応用', clickClass, '', '.submit')
     }
+    // PageUpボタンで次のページ
     if (event.key === 'PageUp') {
       executeFunction(every, 'every 応用', clickClass, '', '.submit')
     }
