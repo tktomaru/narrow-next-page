@@ -72,6 +72,9 @@ document.addEventListener('keydown', function (event) {
     func(parameter, clickFunc, text, selectClass)
   }
 
+  // console.log(window.location.href)
+  currentDomain = new URL(window.location.href).host
+  console.log('currentDomain:', currentDomain)
   // ============= ハーメルン用 =============
   if (currentDomain == 'syosetu.org') {
     if (event.key === 'PageDown') {
@@ -131,18 +134,18 @@ document.addEventListener('keydown', function (event) {
   }
 })
 
-// 現在のタブのURLを取得
-var currentURL = window.location.href
+// // 現在のタブのURLを取得
+// var currentURL = window.location.href
 
-// メッセージを送信
-chrome.runtime.sendMessage({ action: 'getCurrentURL', url: currentURL })
+// // メッセージを送信
+// chrome.runtime.sendMessage({ action: 'getCurrentURL', url: currentURL })
 
-var currentDomain = ''
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-  var receivedURL = message.url
-  console.log('Received URL:', receivedURL)
-  if (receivedURL !== '') {
-    currentDomain = new URL(receivedURL).host
-    console.log('currentDomain:', currentDomain)
-  }
-})
+// var currentDomain = ''
+// chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+//   var receivedURL = message.url
+//   console.log('Received URL:', receivedURL)
+//   if (receivedURL !== '') {
+//     currentDomain = new URL(receivedURL).host
+//     console.log('currentDomain:', currentDomain)
+//   }
+// })
