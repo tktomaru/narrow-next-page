@@ -13,3 +13,18 @@ chrome.runtime.onInstalled.addListener(() => {
 //     })
 //   }
 // })
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  if (message.action === 'transitionPrevPage') {
+    // 一つ左のタブに移動する関数
+    function moveToLeftTab() {
+      chrome.tabs.query({ currentWindow: true }, function (tabs) {
+        var currentTabIndex = tabs.findIndex((tab) => tab.active)
+        var targetTabIndex = (currentTabIndex - 1 + tabs.length) % tabs.length
+
+        chrome.tabs.update(tabs[targetTabIndex].id, { active: true })
+      })
+    }
+    moveToLeftTab()
+  }
+})

@@ -161,6 +161,12 @@ document.addEventListener('keydown', function (event) {
     if (event.key === 'PageUp') {
       executeFunction(every, 'every 応用', clickClass, '', '.submit')
     }
+    // bボタンで左のタブへ
+    if (event.key === 'b') {
+      chrome.runtime.sendMessage({
+        action: 'transitionPrevPage',
+      })
+    }
   }
 })
 
