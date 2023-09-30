@@ -4,23 +4,12 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log('Extension installed')
 })
 
-function getCurrentTabURL() {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    console.log('query')
-    var currentURL = tabs[0].url
-    console.log(currentURL)
-
-    // タブが読み込まれるのを待つ
-    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-      console.log('onUpdated')
-      console.log(currentURL)
-      if (changeInfo.status === 'complete' && tabId === tabs[0].id) {
-        console.log('sendMessage')
-        chrome.tabs.sendMessage(tabId, { url: currentURL })
-      }
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  if (message.action === 'getCurrentURL') {
+    var currentURL = message.url
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      var tabId = tabs[0].id
+      chrome.tabs.sendMessage(tabId, { action: 'updateURL', url: currentURL })
     })
-  })
-}
-
-// タブの変更があるたびにgetCurrentTabURLを呼び出す
-chrome.tabs.onActivated.addListener(getCurrentTabURL)
+  }
+})
