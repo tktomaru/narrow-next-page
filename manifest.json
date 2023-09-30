@@ -3,7 +3,7 @@
   "name": "なろう Click the next(or prev) button on PageDown(or PageUp)", // 拡張機能の名前。
   "version": "1.0", // 拡張機能のバージョン番号。
   "description": "Automatically click the next page button when pressing the Down key at the bottom of the page.", // 拡張機能の説明。
-  "permissions": ["activeTab"],
+  "permissions": ["activeTab", "tabs"],
   "background": {
     "service_worker": "background.js" // "background.js"という名前のサービスワーカースクリプトが指定されています。
   },
@@ -28,12 +28,14 @@
       "matches": [
         // 適用するURLパターンのリスト。
         "https://syosetu.org/novel/*",
-        "https://ncode.syosetu.com/*"
+        "https://ncode.syosetu.com/*",
+        "https://www.ap-siken.com/*"
       ],
       "js": [
         // 実行するJavaScriptファイルのリスト。
         "content.js"
-      ]
+      ],
+      "run_at": "document_end"
     }
   ]
 }

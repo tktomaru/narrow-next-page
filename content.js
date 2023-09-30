@@ -24,7 +24,7 @@ document.addEventListener('keydown', function (event) {
   function top(name, clickFunc, text, selectClass) {
     addLog(`${name}!`)
     // ページの最上部までスクロールされたかをチェック
-    if (window.scrollY <= 0) {
+    if (window.scrollY <= 50) {
       addLog('scrolled to top')
       clickFunc(text, selectClass)
     }
@@ -32,31 +32,38 @@ document.addEventListener('keydown', function (event) {
   function bottom(name, clickFunc, text, selectClass) {
     addLog(`${name}!`)
     // ページの最下部までスクロールされたかをチェック
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    if (
+      window.innerHeight + window.scrollY + 50 >=
+      document.body.offsetHeight
+    ) {
       addLog('scrolled to bottom')
       clickFunc(text, selectClass)
     }
   }
-  function narrowClick(text, selectClass) {
-    addLog('hamelonClick')
+  function every(name, clickFunc, text, selectClass) {
+    addLog(`${name}!`)
+    clickFunc(text, selectClass)
+  }
+  function clickClassIncluceText(text, selectClass) {
+    addLog('clickClassIncluceText')
     // class属性がselectClassである要素を探す
     var nextA = document.querySelectorAll(selectClass)
     for (let i = 0; i < nextA.length; i++) {
       const link = nextA[i]
       if (link.textContent.includes(text)) {
-        addLog('■Narrow Next Page clicked')
+        addLog('clickClassIncluceText Next Page clicked')
         link.click()
         break // 最初の次へを見つけたらループを終了します
       }
     }
   }
-  function hamelonClick(text, selectClass) {
-    addLog('hamelonClick')
+  function clickClass(text, selectClass) {
+    addLog('clickClass')
     // class属性がselectClassである要素を探す
     var nextHref = document.querySelector(selectClass)
     if (nextHref) {
       // hrefをクリック
-      addLog('■HAMELN Next Page clicked')
+      addLog('clickClass Next Page clicked')
       nextHref.click()
     }
   }
@@ -66,23 +73,68 @@ document.addEventListener('keydown', function (event) {
   }
 
   // ============= ハーメルン用 =============
-  if (event.key === 'PageDown') {
-    executeFunction(
-      bottom,
-      'bottom hawmelon',
-      hamelonClick,
-      '',
-      '.next_page_link'
-    )
-  }
-  if (event.key === 'PageUp') {
-    executeFunction(top, 'top hawmelon', hamelonClick, '', '.novelnb a')
+  if (currentDomain == 'syosetu.org') {
+    if (event.key === 'PageDown') {
+      executeFunction(
+        bottom,
+        'bottom hawmelon',
+        clickClass,
+        '',
+        '.next_page_link'
+      )
+    }
+    if (event.key === 'PageUp') {
+      executeFunction(top, 'top hawmelon', clickClass, '', '.novelnb a')
+    }
   }
   // ============= なろう用 =============
-  if (event.key === 'PageDown') {
-    executeFunction(bottom, 'bottom narrow', narrowClick, '次へ', '.novel_bn a')
+  if (currentDomain == 'ncode.syosetu.com') {
+    if (event.key === 'PageDown') {
+      executeFunction(
+        bottom,
+        'bottom narrow',
+        clickClassIncluceText,
+        '次へ',
+        '.novel_bn a'
+      )
+    }
+    if (event.key === 'PageUp') {
+      executeFunction(
+        top,
+        'top narrow',
+        clickClassIncluceText,
+        '前へ',
+        '.novel_bn a'
+      )
+    }
   }
-  if (event.key === 'PageUp') {
-    executeFunction(top, 'top narrow', narrowClick, '前へ', '.novel_bn a')
+  // ============= 応用情報用 =============
+  if (currentDomain == 'www.ap-siken.com') {
+    if (event.key === '1') {
+      executeFunction(every, '応用', clickClassIncluceText, 'ア', '.selectBtn')
+    }
+    if (event.key === '2') {
+      executeFunction(every, '応用', clickClassIncluceText, 'イ', '.selectBtn')
+    }
+    if (event.key === '3') {
+      executeFunction(every, '応用', clickClassIncluceText, 'ウ', '.selectBtn')
+    }
+    if (event.key === '4') {
+      executeFunction(every, '応用', clickClassIncluceText, 'エ', '.selectBtn')
+    }
+    if (event.key === 'PageDown') {
+      executeFunction(every, 'bottom 応用', clickClass, '', '.submit')
+    }
+    if (event.key === 'PageUp') {
+      executeFunction(every, 'top narrow', clickClass, '', '.submit')
+    }
   }
+})
+var currentDomain = ''
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  var receivedURL = message.url
+  console.log('Received URL:', receivedURL)
+  currentDomain = new URL(receivedURL).host
+  console.log('currentDomain:', currentDomain)
+  // 以降の処理
 })
