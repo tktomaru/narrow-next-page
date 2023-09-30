@@ -123,10 +123,10 @@ document.addEventListener('keydown', function (event) {
       executeFunction(every, '応用', clickClassIncluceText, 'エ', '.selectBtn')
     }
     if (event.key === 'PageDown') {
-      executeFunction(every, 'bottom 応用', clickClass, '', '.submit')
+      executeFunction(every, 'every 応用', clickClass, '', '.submit')
     }
     if (event.key === 'PageUp') {
-      executeFunction(every, 'top narrow', clickClass, '', '.submit')
+      executeFunction(every, 'every 応用', clickClass, '', '.submit')
     }
   }
 })
